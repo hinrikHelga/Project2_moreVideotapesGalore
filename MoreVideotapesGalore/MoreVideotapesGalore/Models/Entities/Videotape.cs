@@ -4,10 +4,10 @@ namespace MoreVideotapesGalore.Models.Entities
 {
     public class Videotape
     {
-        private int id { get; set; }
-        private string director_name { get; set; }
-        private string type { get; set; }
-        private string release_date { get; set; }
-        private string eidr { get; set; }
+        public int id { get; set; }
+        public string director_name { get; set; }
+        public string type { get; set; }
+        public string release_date { get; set; }
+        public string eidr { get; set; }
     }
 }

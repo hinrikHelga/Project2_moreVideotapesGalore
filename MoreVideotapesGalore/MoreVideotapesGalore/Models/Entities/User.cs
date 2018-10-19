@@ -5,11 +5,11 @@ namespace MoreVideotapesGalore.Models.Entities
 {
     public class User
     {
-        private int id { get; set; }
-        private string first_name { get; set; }
-        private string last_name { get; set; }
-        private string email { get; set; }
-        private string phone_number { get; set; }
-        private string address { get; set; }
+        public int id { get; set; }
+        public string first_name { get; set; }
+        public string last_name { get; set; }
+        public string email { get; set; }
+        public string phone_number { get; set; }
+        public string address { get; set; }
     }
 }
