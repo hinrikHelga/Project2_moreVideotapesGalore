@@ -8,7 +8,6 @@ namespace MoreVideotapesGalore.Models.Entities
         public int videotapeId { get; set; }
         public string borrow_date { get; set; }
         public string return_date { get; set; }
-        public bool isRented { get; set; }
 
 
     }

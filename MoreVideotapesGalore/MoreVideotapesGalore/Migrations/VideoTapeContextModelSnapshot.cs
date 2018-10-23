@@ -22,8 +22,6 @@ namespace MoreVideotapesGalore.Migrations
 
                     b.Property<string>("borrow_date");
 
-                    b.Property<bool>("isRented");
-
                     b.Property<string>("return_date");
 
                     b.Property<int>("userId");
@@ -81,6 +79,8 @@ namespace MoreVideotapesGalore.Migrations
                     b.Property<string>("director_last_name");
 
                     b.Property<string>("eidr");
+
+                    b.Property<bool>("isRented");
 
                     b.Property<string>("release_date");
 

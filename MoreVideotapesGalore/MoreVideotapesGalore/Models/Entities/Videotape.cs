@@ -11,5 +11,6 @@ namespace MoreVideotapesGalore.Models.Entities
         public string type { get; set; }
         public string release_date { get; set; }
         public string eidr { get; set; }
+        public bool isRented { get; set; }
     }
 }

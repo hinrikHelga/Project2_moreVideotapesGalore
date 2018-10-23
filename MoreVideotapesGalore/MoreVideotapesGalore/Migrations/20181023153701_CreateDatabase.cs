@@ -15,8 +15,7 @@ namespace MoreVideotapesGalore.Migrations
                     userId = table.Column<int>(nullable: false),
                     videotapeId = table.Column<int>(nullable: false),
                     borrow_date = table.Column<string>(nullable: true),
-                    return_date = table.Column<string>(nullable: true),
-                    isRented = table.Column<bool>(nullable: false)
+                    return_date = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -66,7 +65,8 @@ namespace MoreVideotapesGalore.Migrations
                     director_last_name = table.Column<string>(nullable: true),
                     type = table.Column<string>(nullable: true),
                     release_date = table.Column<string>(nullable: true),
-                    eidr = table.Column<string>(nullable: true)
+                    eidr = table.Column<string>(nullable: true),
+                    isRented = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

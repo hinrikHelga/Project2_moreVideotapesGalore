@@ -39,6 +39,10 @@ namespace MoreVideotapesGalore.Controllers
 
             var videotape = await _context.Videotapes.FindAsync(id);
 
+            IEnumerable<Borrow> br = _context.Borrows.Where(e => e.videotapeId == id);
+            Console.WriteLine("here:");
+            Console.Write(br);
+
             if (videotape == null)
             {
                 return NotFound();

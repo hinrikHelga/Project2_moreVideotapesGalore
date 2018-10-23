@@ -8,7 +8,7 @@ using VideoTapeNS;
 namespace MoreVideotapesGalore.Migrations
 {
     [DbContext(typeof(VideoTapeContext))]
-    [Migration("20181023142020_CreateDatabase")]
+    [Migration("20181023153701_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,8 +23,6 @@ namespace MoreVideotapesGalore.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("borrow_date");
-
-                    b.Property<bool>("isRented");
 
                     b.Property<string>("return_date");
 
@@ -83,6 +81,8 @@ namespace MoreVideotapesGalore.Migrations
                     b.Property<string>("director_last_name");
 
                     b.Property<string>("eidr");
+
+                    b.Property<bool>("isRented");
 
                     b.Property<string>("release_date");
 
