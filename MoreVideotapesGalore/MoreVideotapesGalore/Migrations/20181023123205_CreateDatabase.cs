@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MoreVideotapesGalore.Migrations
 {
@@ -11,22 +10,25 @@ namespace MoreVideotapesGalore.Migrations
                 name: "Borrows",
                 columns: table => new
                 {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    borrowId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    userId = table.Column<int>(nullable: false),
+                    videotapeId = table.Column<int>(nullable: false),
                     borrow_date = table.Column<string>(nullable: true),
-                    return_date = table.Column<string>(nullable: true)
+                    return_date = table.Column<string>(nullable: true),
+                    isRented = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Borrows", x => x.id);
+                    table.PrimaryKey("PK_Borrows", x => x.borrowId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    userId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
                     first_name = table.Column<string>(nullable: true),
                     last_name = table.Column<string>(nullable: true),
                     email = table.Column<string>(nullable: true),
@@ -35,23 +37,25 @@ namespace MoreVideotapesGalore.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.id);
+                    table.PrimaryKey("PK_Users", x => x.userId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Videotapes",
                 columns: table => new
                 {
-                    id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    director_name = table.Column<string>(nullable: true),
+                    videotapeId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    title = table.Column<string>(nullable: true),
+                    director_first_name = table.Column<string>(nullable: true),
+                    director_last_name = table.Column<string>(nullable: true),
                     type = table.Column<string>(nullable: true),
                     release_date = table.Column<string>(nullable: true),
                     eidr = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Videotapes", x => x.id);
+                    table.PrimaryKey("PK_Videotapes", x => x.videotapeId);
                 });
         }
 

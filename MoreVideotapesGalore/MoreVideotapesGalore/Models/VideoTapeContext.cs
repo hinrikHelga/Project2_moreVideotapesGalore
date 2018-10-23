@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoreVideotapesGalore.Models.Entities;
 
-namespace EFCoreWebDemo
+namespace VideoTapeNS
 {
-    public class EFCoreWebDemoContext : DbContext
+    public class VideoTapeContext : DbContext
     {
         public DbSet<Borrow> Borrows { get; set; }
         public DbSet<User> Users { get; set; }
