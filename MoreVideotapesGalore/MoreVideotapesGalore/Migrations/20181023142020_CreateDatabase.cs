@@ -24,6 +24,21 @@ namespace MoreVideotapesGalore.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    reviewId = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    userId = table.Column<int>(nullable: false),
+                    videotapeId = table.Column<int>(nullable: false),
+                    rating = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.reviewId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -63,6 +78,9 @@ namespace MoreVideotapesGalore.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Borrows");
+
+            migrationBuilder.DropTable(
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "Users");

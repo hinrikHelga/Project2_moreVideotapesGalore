@@ -35,6 +35,22 @@ namespace MoreVideotapesGalore.Migrations
                     b.ToTable("Borrows");
                 });
 
+            modelBuilder.Entity("MoreVideotapesGalore.Models.Entities.Review", b =>
+                {
+                    b.Property<int>("reviewId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("rating");
+
+                    b.Property<int>("userId");
+
+                    b.Property<int>("videotapeId");
+
+                    b.HasKey("reviewId");
+
+                    b.ToTable("Reviews");
+                });
+
             modelBuilder.Entity("MoreVideotapesGalore.Models.Entities.User", b =>
                 {
                     b.Property<int>("userId")

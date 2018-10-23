@@ -8,7 +8,7 @@ using VideoTapeNS;
 namespace MoreVideotapesGalore.Migrations
 {
     [DbContext(typeof(VideoTapeContext))]
-    [Migration("20181023123205_CreateDatabase")]
+    [Migration("20181023142020_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,6 +35,22 @@ namespace MoreVideotapesGalore.Migrations
                     b.HasKey("borrowId");
 
                     b.ToTable("Borrows");
+                });
+
+            modelBuilder.Entity("MoreVideotapesGalore.Models.Entities.Review", b =>
+                {
+                    b.Property<int>("reviewId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("rating");
+
+                    b.Property<int>("userId");
+
+                    b.Property<int>("videotapeId");
+
+                    b.HasKey("reviewId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("MoreVideotapesGalore.Models.Entities.User", b =>
