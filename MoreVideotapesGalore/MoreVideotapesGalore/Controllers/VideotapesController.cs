@@ -1,12 +1,10 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoreVideotapesGalore.Models.Entities;
-using VideoTapeNS;
+using MoreVideotapesGalore.Services;
 
 namespace MoreVideotapesGalore.Controllers
 {
@@ -14,18 +12,18 @@ namespace MoreVideotapesGalore.Controllers
     [ApiController]
     public class VideotapesController : ControllerBase
     {
-        private readonly VideoTapeContext _context;
+        private VideotapeService vts;
 
-        public VideotapesController(VideoTapeContext context)
+        public VideotapesController()
         {
-            _context = context;
+            vts = new VideotapeService();
         }
 
         // GET: api/Videotapes
         [HttpGet]
         public IEnumerable<Videotape> GetVideotapes()
         {
-            return _context.Videotapes;
+            return vts.GetAllVideotapes();
         }
 
         // GET: api/Videotapes/5
@@ -37,18 +35,14 @@ namespace MoreVideotapesGalore.Controllers
                 return BadRequest(ModelState);
             }
 
-            var videotape = await _context.Videotapes.FindAsync(id);
+            var Data = vts.getVideotapeAndBorrow(id);
 
-            IEnumerable<Borrow> br = _context.Borrows.Where(e => e.videotapeId == id);
-            Console.WriteLine("here:");
-            Console.Write(br);
-
-            if (videotape == null)
+            if (Data == null)
             {
                 return NotFound();
             }
 
-            return Ok(videotape);
+            return Ok(Data);
         }
 
         // PUT: api/Videotapes/5
@@ -65,11 +59,9 @@ namespace MoreVideotapesGalore.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(videotape).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                vts.EditVideotape(videotape);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -83,7 +75,7 @@ namespace MoreVideotapesGalore.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(videotape);
         }
 
         // POST: api/Videotapes
@@ -95,8 +87,7 @@ namespace MoreVideotapesGalore.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Videotapes.Add(videotape);
-            await _context.SaveChangesAsync();
+            vts.addVideotape(videotape);
 
             return CreatedAtAction("GetVideotape", new { id = videotape.videotapeId }, videotape);
         }
@@ -110,21 +101,21 @@ namespace MoreVideotapesGalore.Controllers
                 return BadRequest(ModelState);
             }
 
-            var videotape = await _context.Videotapes.FindAsync(id);
+            var videotape = vts.getVideotape(id);
+
             if (videotape == null)
             {
                 return NotFound();
             }
 
-            _context.Videotapes.Remove(videotape);
-            await _context.SaveChangesAsync();
+            vts.deleteVideotape(videotape);
 
             return Ok(videotape);
         }
 
         private bool VideotapeExists(int id)
         {
-            return _context.Videotapes.Any(e => e.videotapeId == id);
+            return vts.checkIfExists(id);
         }
     }
 }

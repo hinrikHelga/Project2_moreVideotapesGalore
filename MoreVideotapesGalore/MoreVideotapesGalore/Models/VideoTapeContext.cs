@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MoreVideotapesGalore.Models.Entities;
 
+
 namespace VideoTapeNS
 {
     public class VideoTapeContext : DbContext

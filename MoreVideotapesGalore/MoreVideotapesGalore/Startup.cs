@@ -29,6 +29,7 @@ namespace MoreVideotapesGalore
         {
             services.AddDbContext<VideoTapeContext>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,7 +43,6 @@ namespace MoreVideotapesGalore
             {
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseMvc();
         }
