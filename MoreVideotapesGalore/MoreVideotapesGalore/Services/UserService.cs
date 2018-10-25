@@ -21,6 +21,14 @@ namespace MoreVideotapesGalore.Services
         public object getUserAndBorrow(int id)
         {
             User user = _context.Users.SingleOrDefault(e => e.userId == id);
+            IEnumerable<Borrow> borrows = _context.Borrows.Where(e => e.userId == id && e.return_date == null);
+
+            return new { user, borrows };
+        }
+
+        public object getUserAndBorrowHistory(int id)
+        {
+            User user = _context.Users.SingleOrDefault(e => e.userId == id);
             IEnumerable<Borrow> borrows = _context.Borrows.Where(e => e.userId == id);
 
             return new { user, borrows };
@@ -60,7 +68,7 @@ namespace MoreVideotapesGalore.Services
 
         public User getUser(int id)
         {
-            var user = _context.Users.SingleOrDefault(e => e.userId == id);
+            User user = _context.Users.SingleOrDefault(e => e.userId == id);
             return user;
         }
 

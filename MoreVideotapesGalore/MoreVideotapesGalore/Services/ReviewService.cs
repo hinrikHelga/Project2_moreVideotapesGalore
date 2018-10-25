@@ -62,10 +62,12 @@ namespace MoreVideotapesGalore.Services
             return review;
         }
 
-        public void deleteReview(Review review)
+        public Review deleteReview(int userId, int tapeId)
         {
+            var review = _context.Reviews.SingleOrDefault(e => e.userId == userId && e.videotapeId == tapeId);
             _context.Reviews.Remove(review);
             _context.SaveChangesAsync();
+            return review;
         }
 
         public bool checkIfExists(int id)

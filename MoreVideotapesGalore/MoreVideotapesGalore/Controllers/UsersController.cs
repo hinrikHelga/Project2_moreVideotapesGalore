@@ -40,7 +40,7 @@ namespace MoreVideotapesGalore.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = us.getUserAndBorrow(id);
+            var user = us.getUserAndBorrowHistory(id);
 
             if (user == null)
             {
@@ -58,15 +58,14 @@ namespace MoreVideotapesGalore.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = us.getUser(id);
-            var borrows = us.getTapes(id);
+            var tapesOnLoan = us.getUserAndBorrow(id);
 
-            if (user == null)
+            if (tapesOnLoan == null)
             {
                 return NotFound();
             }
 
-            return Ok(new { user, borrows } );
+            return Ok(tapesOnLoan );
         }
 
 // PUT: api/Users/5

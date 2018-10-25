@@ -88,21 +88,16 @@ namespace MoreVideotapesGalore.Controllers
 
             return Ok(review);
         }
-
+        ///users/{user_id}/reviews/{tape_id}
         // PUT: api/Reviews/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutReview([FromRoute] int id, [FromBody] Review review)
+        [HttpPut("users/{user_id}/reviews/{tape_id}")]
+        public async Task<IActionResult> PutReview( [FromBody] Review review, [FromRoute] int user_id, [FromRoute] int tape_id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
-            if (id != review.reviewId)
-            {
-                return BadRequest();
-            }
-
+ 
             _context.Entry(review).State = EntityState.Modified;
 
             try
@@ -111,7 +106,7 @@ namespace MoreVideotapesGalore.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ReviewExists(id))
+                if (!ReviewExists(review.reviewId))
                 {
                     return NotFound();
                 }
@@ -139,22 +134,21 @@ namespace MoreVideotapesGalore.Controllers
         }
 
         // DELETE: api/Reviews/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteReview([FromRoute] int id)
+        ///users/{user_id}/reviews/{tape_id}
+[HttpDelete("users/{user_id}/reviews/{tape_id}")]
+        public async Task<IActionResult> DeleteReview([FromRoute] int user_id, [FromRoute] int tape_id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var review = await _context.Reviews.FindAsync(id);
+            var review = rs.deleteReview(user_id, tape_id);
+
             if (review == null)
             {
                 return NotFound();
             }
-
-            _context.Reviews.Remove(review);
-            await _context.SaveChangesAsync();
 
             return Ok(review);
         }
