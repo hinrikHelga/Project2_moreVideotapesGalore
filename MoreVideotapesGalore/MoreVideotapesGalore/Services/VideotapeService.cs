@@ -74,7 +74,6 @@ namespace MoreVideotapesGalore.Services
         {
             return _context.Videotapes.Any(e => e.videotapeId == id);
         }
-
-        }
     }
+}
 
