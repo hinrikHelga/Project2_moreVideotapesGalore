@@ -8,7 +8,7 @@ using VideoTapeNS;
 namespace MoreVideotapesGalore.Migrations
 {
     [DbContext(typeof(VideoTapeContext))]
-    [Migration("20181025121245_CreateDatabase")]
+    [Migration("20181025132851_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1392,7 +1392,7 @@ namespace MoreVideotapesGalore.Migrations
                             director_first_name = "Nisuis",
                             director_last_name = "Phylis",
                             eidr = "10.5240/FCFB-FFEE-EFFF-FEBB-A8FE-C",
-                            isRented = false,
+                            isRented = true,
                             release_date = "2009-01-20",
                             title = "Extended radical parallelism",
                             type = "Betamax"
@@ -2679,7 +2679,7 @@ namespace MoreVideotapesGalore.Migrations
                             director_first_name = "Pavolillo",
                             director_last_name = "Dionisio",
                             eidr = "10.5240/FEEB-DCCE-EDCE-EFFF-FFFF-C",
-                            isRented = false,
+                            isRented = true,
                             release_date = "1994-08-14",
                             title = "Public-key client-server internet solution",
                             type = "Betamax"
@@ -3570,7 +3570,7 @@ namespace MoreVideotapesGalore.Migrations
                             director_first_name = "Berends",
                             director_last_name = "Arabele",
                             eidr = "10.5240/EFFF-EDEF-DEFF-FFF9-FFFF-C",
-                            isRented = false,
+                            isRented = true,
                             release_date = "1991-01-02",
                             title = "Customer-focused bottom-line artificial intelligence",
                             type = "Betamax"
@@ -4219,7 +4219,7 @@ namespace MoreVideotapesGalore.Migrations
                             director_first_name = "Callander",
                             director_last_name = "Tiler",
                             eidr = "10.5240/CEFF-FFFF-FFEF-EEFD-DFDF-C",
-                            isRented = false,
+                            isRented = true,
                             release_date = "2014-06-08",
                             title = "Synergistic regional core",
                             type = "VHS"
@@ -5792,7 +5792,7 @@ namespace MoreVideotapesGalore.Migrations
                             director_first_name = "Starrs",
                             director_last_name = "Ardeen",
                             eidr = "10.5240/EFDD-FEFF-FEFF-DDFF-DFEF-C",
-                            isRented = false,
+                            isRented = true,
                             release_date = "2000-01-25",
                             title = "Switchable eco-centric moratorium",
                             type = "VHS"
@@ -6628,7 +6628,7 @@ namespace MoreVideotapesGalore.Migrations
                             director_first_name = "Heynel",
                             director_last_name = "Nichol",
                             eidr = "10.5240/DDEE-FEFF-BBEE-CFFF-FFFF-C",
-                            isRented = false,
+                            isRented = true,
                             release_date = "2007-09-21",
                             title = "Realigned 24/7 emulation",
                             type = "Betamax"
@@ -7255,7 +7255,7 @@ namespace MoreVideotapesGalore.Migrations
                             director_first_name = "Sancto",
                             director_last_name = "Andres",
                             eidr = "10.5240/EBEF-EFFF-FFFF-FFDE-FDFF-C",
-                            isRented = false,
+                            isRented = true,
                             release_date = "2006-04-16",
                             title = "Balanced full-range website",
                             type = "VHS"
@@ -9103,7 +9103,7 @@ namespace MoreVideotapesGalore.Migrations
                             director_first_name = "Balham",
                             director_last_name = "Kimberly",
                             eidr = "10.5240/FCFF-FFFF-FFEF-FFED-FFFF-C",
-                            isRented = false,
+                            isRented = true,
                             release_date = "1990-12-06",
                             title = "Multi-channelled value-added benchmark",
                             type = "VHS"
@@ -9169,7 +9169,7 @@ namespace MoreVideotapesGalore.Migrations
                             director_first_name = "Pleass",
                             director_last_name = "Clarie",
                             eidr = "10.5240/FDAE-EFED-FFFF-FCFF-CFBF-C",
-                            isRented = false,
+                            isRented = true,
                             release_date = "2002-03-24",
                             title = "Cloned tertiary concept",
                             type = "VHS"
@@ -9246,7 +9246,7 @@ namespace MoreVideotapesGalore.Migrations
                             director_first_name = "Fratczak",
                             director_last_name = "Teodor",
                             eidr = "10.5240/BEEF-DEFF-FFDE-EEEE-FFED-C",
-                            isRented = false,
+                            isRented = true,
                             release_date = "2012-05-30",
                             title = "Profound multimedia productivity",
                             type = "Betamax"
@@ -11347,7 +11347,7 @@ namespace MoreVideotapesGalore.Migrations
                             director_first_name = "Ainscough",
                             director_last_name = "Mei",
                             eidr = "10.5240/BBDE-FEEF-FFEF-FEFF-CEFF-C",
-                            isRented = false,
+                            isRented = true,
                             release_date = "2012-01-30",
                             title = "Object-based motivating core",
                             type = "VHS"
@@ -11413,7 +11413,7 @@ namespace MoreVideotapesGalore.Migrations
                             director_first_name = "Gallant",
                             director_last_name = "Ronica",
                             eidr = "10.5240/FFFF-AEFF-FFEF-FEFF-DDFF-C",
-                            isRented = false,
+                            isRented = true,
                             release_date = "2018-08-23",
                             title = "Networked 3rd generation moratorium",
                             type = "VHS"
@@ -12194,7 +12194,7 @@ namespace MoreVideotapesGalore.Migrations
                             director_first_name = "Swancock",
                             director_last_name = "Jard",
                             eidr = "10.5240/FDDB-AEFC-DEEE-FFDF-BDFF-C",
-                            isRented = false,
+                            isRented = true,
                             release_date = "1998-06-03",
                             title = "Up-sized methodical policy",
                             type = "Betamax"

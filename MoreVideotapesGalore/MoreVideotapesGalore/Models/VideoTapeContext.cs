@@ -6,6 +6,7 @@ using System.IO;
 using System.Reflection;
 using System;
 using Microsoft.AspNetCore.Hosting;
+using System.Collections.Generic;
 
 namespace VideoTapeNS
 {
@@ -17,6 +18,7 @@ namespace VideoTapeNS
         public DbSet<Review> Reviews { get; set; }
 
         private int incremented_id = 0;
+        IDictionary<int, string> borrowedTapes = new Dictionary<int, string>();
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -24,38 +26,7 @@ namespace VideoTapeNS
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            using (StreamReader streamReader = new StreamReader("..\\MoreVideotapesGalore\\Seed\\Videotapes.json"))
-            {
-                string tapeData = streamReader.ReadToEnd();
-                JArray tapes = JArray.Parse(tapeData);
-                foreach (var tape in tapes)
-                {
-                    JObject tapeJObject = (JObject)JToken.FromObject(tape);
-
-                    int tapeId = (int)tapeJObject.GetValue("id");
-                    string title = (string)tapeJObject.GetValue("title");
-                    string dln = (string)tapeJObject.GetValue("director_first_name");
-                    string dfn = (string)tapeJObject.GetValue("director_last_name");
-                    string type = (string)tapeJObject.GetValue("type");
-                    string release_date = (string)tapeJObject.GetValue("release_date");
-                    string eidr = (string)tapeJObject.GetValue("eidr");
-
-                    modelBuilder.Entity<Videotape>().HasData(
-                        new Videotape
-                        {
-                            videotapeId = tapeId,
-                            title = title,
-                            director_first_name = dfn,
-                            director_last_name = dln,
-                            type = type,
-                            release_date = release_date,
-                            eidr = eidr,
-                            isRented = false
-                        });
-                }
-            }
-
+        {           
             using (StreamReader streamReader = new StreamReader("..\\MoreVideotapesGalore\\Seed\\Friends.json"))
             {
                 string userData = streamReader.ReadToEnd();
@@ -93,6 +64,11 @@ namespace VideoTapeNS
                                     borrow_date = borrow_date,
                                     return_date = return_date
                                 });
+
+                            if (return_date == null)
+                            {
+                                borrowedTapes[borrowedTapeId] = return_date;
+                            }
                         }
                     }
 
@@ -106,6 +82,56 @@ namespace VideoTapeNS
                             phone_number = phone,
                             address = address
                         });
+                }
+            }
+
+            using (StreamReader streamReader = new StreamReader("..\\MoreVideotapesGalore\\Seed\\Videotapes.json"))
+            {
+                string tapeData = streamReader.ReadToEnd();
+                JArray tapes = JArray.Parse(tapeData);
+                foreach (var tape in tapes)
+                {
+                    JObject tapeJObject = (JObject)JToken.FromObject(tape);
+
+                    int tapeId = (int)tapeJObject.GetValue("id");
+                    string title = (string)tapeJObject.GetValue("title");
+                    string dln = (string)tapeJObject.GetValue("director_first_name");
+                    string dfn = (string)tapeJObject.GetValue("director_last_name");
+                    string type = (string)tapeJObject.GetValue("type");
+                    string release_date = (string)tapeJObject.GetValue("release_date");
+                    string eidr = (string)tapeJObject.GetValue("eidr");
+
+                    if (borrowedTapes.ContainsKey(tapeId))
+                    {
+                        modelBuilder.Entity<Videotape>().HasData(
+                            new Videotape
+                            {
+                                videotapeId = tapeId,
+                                title = title,
+                                director_first_name = dfn,
+                                director_last_name = dln,
+                                type = type,
+                                release_date = release_date,
+                                eidr = eidr,
+                                isRented = true
+                            });
+                    }
+
+                    else
+                    {
+                        modelBuilder.Entity<Videotape>().HasData(
+                            new Videotape
+                            {
+                                videotapeId = tapeId,
+                                title = title,
+                                director_first_name = dfn,
+                                director_last_name = dln,
+                                type = type,
+                                release_date = release_date,
+                                eidr = eidr,
+                                isRented = false
+                            });
+                    }
                 }
             }
         }

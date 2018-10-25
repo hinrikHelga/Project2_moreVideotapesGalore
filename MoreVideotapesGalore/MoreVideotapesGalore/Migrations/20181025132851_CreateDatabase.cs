@@ -1036,7 +1036,7 @@ namespace MoreVideotapesGalore.Migrations
             migrationBuilder.InsertData(
                 table: "Videotapes",
                 columns: new[] { "videotapeId", "director_first_name", "director_last_name", "eidr", "isRented", "release_date", "title", "type" },
-                values: new object[] { 724, "Pleass", "Clarie", "10.5240/FDAE-EFED-FFFF-FCFF-CFBF-C", false, "2002-03-24", "Cloned tertiary concept", "VHS" });
+                values: new object[] { 724, "Pleass", "Clarie", "10.5240/FDAE-EFED-FFFF-FCFF-CFBF-C", true, "2002-03-24", "Cloned tertiary concept", "VHS" });
 
             migrationBuilder.InsertData(
                 table: "Videotapes",
@@ -1071,7 +1071,7 @@ namespace MoreVideotapesGalore.Migrations
             migrationBuilder.InsertData(
                 table: "Videotapes",
                 columns: new[] { "videotapeId", "director_first_name", "director_last_name", "eidr", "isRented", "release_date", "title", "type" },
-                values: new object[] { 731, "Fratczak", "Teodor", "10.5240/BEEF-DEFF-FFDE-EEEE-FFED-C", false, "2012-05-30", "Profound multimedia productivity", "Betamax" });
+                values: new object[] { 731, "Fratczak", "Teodor", "10.5240/BEEF-DEFF-FFDE-EEEE-FFED-C", true, "2012-05-30", "Profound multimedia productivity", "Betamax" });
 
             migrationBuilder.InsertData(
                 table: "Videotapes",
@@ -1176,7 +1176,7 @@ namespace MoreVideotapesGalore.Migrations
             migrationBuilder.InsertData(
                 table: "Videotapes",
                 columns: new[] { "videotapeId", "director_first_name", "director_last_name", "eidr", "isRented", "release_date", "title", "type" },
-                values: new object[] { 718, "Balham", "Kimberly", "10.5240/FCFF-FFFF-FFEF-FFED-FFFF-C", false, "1990-12-06", "Multi-channelled value-added benchmark", "VHS" });
+                values: new object[] { 718, "Balham", "Kimberly", "10.5240/FCFF-FFFF-FFEF-FFED-FFFF-C", true, "1990-12-06", "Multi-channelled value-added benchmark", "VHS" });
 
             migrationBuilder.InsertData(
                 table: "Videotapes",
@@ -1426,7 +1426,7 @@ namespace MoreVideotapesGalore.Migrations
             migrationBuilder.InsertData(
                 table: "Videotapes",
                 columns: new[] { "videotapeId", "director_first_name", "director_last_name", "eidr", "isRented", "release_date", "title", "type" },
-                values: new object[] { 550, "Sancto", "Andres", "10.5240/EBEF-EFFF-FFFF-FFDE-FDFF-C", false, "2006-04-16", "Balanced full-range website", "VHS" });
+                values: new object[] { 550, "Sancto", "Andres", "10.5240/EBEF-EFFF-FFFF-FFDE-FDFF-C", true, "2006-04-16", "Balanced full-range website", "VHS" });
 
             migrationBuilder.InsertData(
                 table: "Videotapes",
@@ -2031,7 +2031,7 @@ namespace MoreVideotapesGalore.Migrations
             migrationBuilder.InsertData(
                 table: "Videotapes",
                 columns: new[] { "videotapeId", "director_first_name", "director_last_name", "eidr", "isRented", "release_date", "title", "type" },
-                values: new object[] { 922, "Ainscough", "Mei", "10.5240/BBDE-FEEF-FFEF-FEFF-CEFF-C", false, "2012-01-30", "Object-based motivating core", "VHS" });
+                values: new object[] { 922, "Ainscough", "Mei", "10.5240/BBDE-FEEF-FFEF-FEFF-CEFF-C", true, "2012-01-30", "Object-based motivating core", "VHS" });
 
             migrationBuilder.InsertData(
                 table: "Videotapes",
@@ -2061,7 +2061,7 @@ namespace MoreVideotapesGalore.Migrations
             migrationBuilder.InsertData(
                 table: "Videotapes",
                 columns: new[] { "videotapeId", "director_first_name", "director_last_name", "eidr", "isRented", "release_date", "title", "type" },
-                values: new object[] { 928, "Gallant", "Ronica", "10.5240/FFFF-AEFF-FFEF-FEFF-DDFF-C", false, "2018-08-23", "Networked 3rd generation moratorium", "VHS" });
+                values: new object[] { 928, "Gallant", "Ronica", "10.5240/FFFF-AEFF-FFEF-FEFF-DDFF-C", true, "2018-08-23", "Networked 3rd generation moratorium", "VHS" });
 
             migrationBuilder.InsertData(
                 table: "Videotapes",
@@ -3416,7 +3416,7 @@ namespace MoreVideotapesGalore.Migrations
             migrationBuilder.InsertData(
                 table: "Videotapes",
                 columns: new[] { "videotapeId", "director_first_name", "director_last_name", "eidr", "isRented", "release_date", "title", "type" },
-                values: new object[] { 134, "Pavolillo", "Dionisio", "10.5240/FEEB-DCCE-EDCE-EFFF-FFFF-C", false, "1994-08-14", "Public-key client-server internet solution", "Betamax" });
+                values: new object[] { 134, "Pavolillo", "Dionisio", "10.5240/FEEB-DCCE-EDCE-EFFF-FFFF-C", true, "1994-08-14", "Public-key client-server internet solution", "Betamax" });
 
             migrationBuilder.InsertData(
                 table: "Videotapes",
@@ -3821,7 +3821,7 @@ namespace MoreVideotapesGalore.Migrations
             migrationBuilder.InsertData(
                 table: "Videotapes",
                 columns: new[] { "videotapeId", "director_first_name", "director_last_name", "eidr", "isRented", "release_date", "title", "type" },
-                values: new object[] { 215, "Berends", "Arabele", "10.5240/EFFF-EDEF-DEFF-FFF9-FFFF-C", false, "1991-01-02", "Customer-focused bottom-line artificial intelligence", "Betamax" });
+                values: new object[] { 215, "Berends", "Arabele", "10.5240/EFFF-EDEF-DEFF-FFF9-FFFF-C", true, "1991-01-02", "Customer-focused bottom-line artificial intelligence", "Betamax" });
 
             migrationBuilder.InsertData(
                 table: "Videotapes",
@@ -4081,7 +4081,7 @@ namespace MoreVideotapesGalore.Migrations
             migrationBuilder.InsertData(
                 table: "Videotapes",
                 columns: new[] { "videotapeId", "director_first_name", "director_last_name", "eidr", "isRented", "release_date", "title", "type" },
-                values: new object[] { 17, "Nisuis", "Phylis", "10.5240/FCFB-FFEE-EFFF-FEBB-A8FE-C", false, "2009-01-20", "Extended radical parallelism", "Betamax" });
+                values: new object[] { 17, "Nisuis", "Phylis", "10.5240/FCFB-FFEE-EFFF-FEBB-A8FE-C", true, "2009-01-20", "Extended radical parallelism", "Betamax" });
 
             migrationBuilder.InsertData(
                 table: "Videotapes",
@@ -4516,7 +4516,7 @@ namespace MoreVideotapesGalore.Migrations
             migrationBuilder.InsertData(
                 table: "Videotapes",
                 columns: new[] { "videotapeId", "director_first_name", "director_last_name", "eidr", "isRented", "release_date", "title", "type" },
-                values: new object[] { 417, "Starrs", "Ardeen", "10.5240/EFDD-FEFF-FEFF-DDFF-DFEF-C", false, "2000-01-25", "Switchable eco-centric moratorium", "VHS" });
+                values: new object[] { 417, "Starrs", "Ardeen", "10.5240/EFDD-FEFF-FEFF-DDFF-DFEF-C", true, "2000-01-25", "Switchable eco-centric moratorium", "VHS" });
 
             migrationBuilder.InsertData(
                 table: "Videotapes",
@@ -4766,7 +4766,7 @@ namespace MoreVideotapesGalore.Migrations
             migrationBuilder.InsertData(
                 table: "Videotapes",
                 columns: new[] { "videotapeId", "director_first_name", "director_last_name", "eidr", "isRented", "release_date", "title", "type" },
-                values: new object[] { 999, "Swancock", "Jard", "10.5240/FDDB-AEFC-DEEE-FFDF-BDFF-C", false, "1998-06-03", "Up-sized methodical policy", "Betamax" });
+                values: new object[] { 999, "Swancock", "Jard", "10.5240/FDDB-AEFC-DEEE-FFDF-BDFF-C", true, "1998-06-03", "Up-sized methodical policy", "Betamax" });
 
             migrationBuilder.InsertData(
                 table: "Videotapes",
@@ -4891,7 +4891,7 @@ namespace MoreVideotapesGalore.Migrations
             migrationBuilder.InsertData(
                 table: "Videotapes",
                 columns: new[] { "videotapeId", "director_first_name", "director_last_name", "eidr", "isRented", "release_date", "title", "type" },
-                values: new object[] { 493, "Heynel", "Nichol", "10.5240/DDEE-FEFF-BBEE-CFFF-FFFF-C", false, "2007-09-21", "Realigned 24/7 emulation", "Betamax" });
+                values: new object[] { 493, "Heynel", "Nichol", "10.5240/DDEE-FEFF-BBEE-CFFF-FFFF-C", true, "2007-09-21", "Realigned 24/7 emulation", "Betamax" });
 
             migrationBuilder.InsertData(
                 table: "Videotapes",
@@ -5366,7 +5366,7 @@ namespace MoreVideotapesGalore.Migrations
             migrationBuilder.InsertData(
                 table: "Videotapes",
                 columns: new[] { "videotapeId", "director_first_name", "director_last_name", "eidr", "isRented", "release_date", "title", "type" },
-                values: new object[] { 274, "Callander", "Tiler", "10.5240/CEFF-FFFF-FFEF-EEFD-DFDF-C", false, "2014-06-08", "Synergistic regional core", "VHS" });
+                values: new object[] { 274, "Callander", "Tiler", "10.5240/CEFF-FFFF-FFEF-EEFD-DFDF-C", true, "2014-06-08", "Synergistic regional core", "VHS" });
 
             migrationBuilder.InsertData(
                 table: "Videotapes",
