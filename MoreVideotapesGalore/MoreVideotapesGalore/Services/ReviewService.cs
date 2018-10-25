@@ -27,26 +27,34 @@ namespace MoreVideotapesGalore.Services
             _context.Entry(review).State = EntityState.Modified;
             _context.SaveChangesAsync();
         }
-
-        public void addReview(Review review)
+        
+        public Review addReview(Review review)
         {
-            //if (!_context.Videotapes.Any())
-            //{
-            //    tape.videotapeId = 1;
-            //}
-            //else
-            //{
-            //    var latestId = _context.Videotapes.Max(p => p.videotapeId);
-            //    tape.videotapeId = latestId + 1;
-            //}
-            //_context.Videotapes.Add(tape);
-            //_context.SaveChangesAsync();
+            if (!_context.Reviews.Any())
+            {
+                review.reviewId = 1;
+            }
+            else
+            {
+                var latestId = _context.Reviews.Max(p => p.reviewId);
+                review.reviewId = latestId + 1;
+            }
+            _context.Reviews.Add(review);
+            _context.SaveChangesAsync();
+
+            return review;
         }
 
-        public Review getReviewFromUser(int userId)
+        public IEnumerable<Review> getReviewFromUser(int userId)
         {
-            var review = _context.Reviews.SingleOrDefault(e => e.userId == userId);
-            return review;
+            IEnumerable<Review> reviews = _context.Reviews.Where(e => e.userId == userId);
+            return reviews;
+        }
+
+        public IEnumerable<Review> getReviewFromUserByTape(int userId, int tapeId)
+        {
+            IEnumerable<Review> reviews = _context.Reviews.Where(e => e.userId == userId && e.videotapeId == tapeId);
+            return reviews;
         }
         public Review getReview(int id)
         {

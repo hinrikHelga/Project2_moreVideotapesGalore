@@ -6,19 +6,22 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoreVideotapesGalore.Models.Entities;
+using MoreVideotapesGalore.Services;
 using VideoTapeNS;
 
 namespace MoreVideotapesGalore.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/")]
     [ApiController]
     public class ReviewsController : ControllerBase
     {
         private readonly VideoTapeContext _context;
+        private ReviewService rs;
 
         public ReviewsController(VideoTapeContext context)
         {
             _context = context;
+            rs = new ReviewService();
         }
 
         // GET: api/Reviews
@@ -27,9 +30,48 @@ namespace MoreVideotapesGalore.Controllers
         {
             return _context.Reviews;
         }
+        ///users/{user_id}/reviews/{tape_id}
+        ///
 
         // GET: api/Reviews/5
-        [HttpGet("{id}")]
+        [HttpGet("users/{userId}/reviews/{tapeId}")]
+        public async Task<IActionResult> GetReviewFromUserByTape([FromRoute] int userId, [FromRoute] int tapeId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var review = rs.getReviewFromUserByTape(userId,tapeId);
+
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(review);
+        }
+
+
+        // GET: api/Reviews/5
+        [HttpGet("users/{userId}/reviews")]
+        public async Task<IActionResult> GetReviewFromUser([FromRoute] int userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var review = rs.getReviewFromUser(userId);
+
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(review);
+        }
+        [HttpGet("reviews/{id}")]
         public async Task<IActionResult> GetReview([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -37,7 +79,7 @@ namespace MoreVideotapesGalore.Controllers
                 return BadRequest(ModelState);
             }
 
-            var review = await _context.Reviews.FindAsync(id);
+            var review = rs.getReview(id);
 
             if (review == null)
             {
@@ -82,19 +124,18 @@ namespace MoreVideotapesGalore.Controllers
             return NoContent();
         }
 
-        // POST: api/Reviews
-        [HttpPost]
-        public async Task<IActionResult> PostReview([FromBody] Review review)
+        // POST: /users/{user_id}/reviews/{tape_id}
+        [HttpPost("users/{user_id}/reviews/{tape_id}")]
+        public async Task<IActionResult> PostReview([FromBody] Review review, [FromRoute] int user_id,[FromRoute] int tape_id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Reviews.Add(review);
-            await _context.SaveChangesAsync();
+            Review new_review = rs.addReview(review);
 
-            return CreatedAtAction("GetReview", new { id = review.reviewId }, review);
+            return CreatedAtAction("GetReview", new { id = new_review.reviewId }, new_review);
         }
 
         // DELETE: api/Reviews/5
