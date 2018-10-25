@@ -253,6 +253,8 @@ namespace MoreVideotapesGalore.Migrations
 
                     b.Property<int>("rating");
 
+                    b.Property<string>("text");
+
                     b.Property<int>("userId");
 
                     b.Property<int>("videotapeId");

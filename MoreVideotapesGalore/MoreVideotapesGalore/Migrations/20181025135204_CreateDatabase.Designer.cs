@@ -8,7 +8,7 @@ using VideoTapeNS;
 namespace MoreVideotapesGalore.Migrations
 {
     [DbContext(typeof(VideoTapeContext))]
-    [Migration("20181025132851_CreateDatabase")]
+    [Migration("20181025135204_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,6 +254,8 @@ namespace MoreVideotapesGalore.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<int>("rating");
+
+                    b.Property<string>("text");
 
                     b.Property<int>("userId");
 

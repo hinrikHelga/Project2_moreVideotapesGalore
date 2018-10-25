@@ -30,7 +30,8 @@ namespace MoreVideotapesGalore.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
                     videotapeId = table.Column<int>(nullable: false),
-                    rating = table.Column<int>(nullable: false)
+                    rating = table.Column<int>(nullable: false),
+                    text = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

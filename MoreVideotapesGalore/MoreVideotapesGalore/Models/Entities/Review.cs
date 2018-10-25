@@ -7,7 +7,6 @@ namespace MoreVideotapesGalore.Models.Entities
         public int userId { get; set; }
         public int videotapeId { get; set; }
         public int rating { get; set; }
-
-
+        public string text { get; set; }
     }
 }
