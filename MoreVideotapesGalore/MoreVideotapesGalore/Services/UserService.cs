@@ -74,10 +74,12 @@ namespace MoreVideotapesGalore.Services
 
         public void deleteUser(User user)
         {
-            //IEnumerable<Borrow> borrows = _context.Borrows.Where(e => e.videotapeId == tape.videotapeId);
-            //_context.Borrows.RemoveRange(borrows);
-            //_context.Videotapes.Remove(tape);
-            //_context.SaveChangesAsync();
+            IEnumerable<Borrow> borrows = _context.Borrows.Where(e => e.userId == user.userId);
+            IEnumerable<Review> reviews = _context.Reviews.Where(e => e.userId == user.userId);
+            _context.Borrows.RemoveRange(borrows);
+            _context.Reviews.RemoveRange(reviews);
+            _context.Users.Remove(user);
+            _context.SaveChangesAsync();
         }
 
         public bool checkIfExists(int id)

@@ -25,13 +25,50 @@ namespace MoreVideotapesGalore.Controllers
         }
 
         // GET: api/Reviews
-        [HttpGet]
+        [HttpGet("tapes/reviews")]
         public IEnumerable<Review> GetReviews()
         {
-            return _context.Reviews;
+            return rs.GetAllReviews();
         }
-        ///users/{user_id}/reviews/{tape_id}
+
+
+        [HttpGet("tapes/{tape_id}/reviews")]
+        public async Task<IActionResult> GetReviewsforTape([FromRoute] int tape_id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            IEnumerable<Review> reviews = rs.getReviewsForTape(tape_id);
+
+            if (reviews == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(reviews);
+        }
+        [HttpGet("tapes/{tape_id}/reviews/{user_id}")]
+        public async Task<IActionResult> GetUserReviewForTape([FromRoute] int tape_id, [FromRoute] int user_id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            Review review = rs.getTapeReviewFromUser(user_id,tape_id);
+
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(review);
+        }
+        ///tapes/{tape_id}/reviews
         ///
+
 
         // GET: api/Reviews/5
         [HttpGet("users/{userId}/reviews/{tapeId}")]
@@ -51,8 +88,25 @@ namespace MoreVideotapesGalore.Controllers
 
             return Ok(review);
         }
+        ///users/{user_id}/recommendation
+        // GET: api/Reviews/5
+        [HttpGet("users/{userId}/recommendation")]
+        public async Task<IActionResult> GetRecommendation([FromRoute] int userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            var review = rs.getRecommendation();
 
+            if (review == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(review);
+        }
         // GET: api/Reviews/5
         [HttpGet("users/{userId}/reviews")]
         public async Task<IActionResult> GetReviewFromUser([FromRoute] int userId)
@@ -71,6 +125,7 @@ namespace MoreVideotapesGalore.Controllers
 
             return Ok(review);
         }
+
         [HttpGet("reviews/{id}")]
         public async Task<IActionResult> GetReview([FromRoute] int id)
         {
@@ -91,18 +146,18 @@ namespace MoreVideotapesGalore.Controllers
         ///users/{user_id}/reviews/{tape_id}
         // PUT: api/Reviews/5
         [HttpPut("users/{user_id}/reviews/{tape_id}")]
+        [HttpPut("tapes/{tape_id}/reviews/{user_id}")]
         public async Task<IActionResult> PutReview( [FromBody] Review review, [FromRoute] int user_id, [FromRoute] int tape_id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
- 
-            _context.Entry(review).State = EntityState.Modified;
+
 
             try
             {
-                await _context.SaveChangesAsync();
+                rs.EditReview(review);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -116,7 +171,7 @@ namespace MoreVideotapesGalore.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(review);
         }
 
         // POST: /users/{user_id}/reviews/{tape_id}
@@ -135,8 +190,9 @@ namespace MoreVideotapesGalore.Controllers
 
         // DELETE: api/Reviews/5
         ///users/{user_id}/reviews/{tape_id}
-[HttpDelete("users/{user_id}/reviews/{tape_id}")]
-        public async Task<IActionResult> DeleteReview([FromRoute] int user_id, [FromRoute] int tape_id)
+[HttpDelete("users/{user_id}/reviews/{tape_id}")] 
+[HttpDelete("tapes/{tape_id}/reviews/{user_id}")]
+public async Task<IActionResult> DeleteReview([FromRoute] int user_id, [FromRoute] int tape_id)
         {
             if (!ModelState.IsValid)
             {

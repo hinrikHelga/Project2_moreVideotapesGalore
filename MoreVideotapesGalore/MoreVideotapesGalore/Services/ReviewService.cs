@@ -22,6 +22,24 @@ namespace MoreVideotapesGalore.Services
             return _context.Reviews;
         }
 
+
+        public IEnumerable<Review> getReviewsForTape(int tapeId)
+        {
+            IEnumerable<Review> reviews = _context.Reviews.Where(e => e.videotapeId == tapeId);
+            return reviews;
+        }
+
+        public Videotape getRecommendation()
+        {
+            int total = _context.Videotapes.Count();
+            Random r = new Random();
+            int offset = r.Next(0, total);
+
+            Videotape result = _context.Videotapes.Skip(offset).FirstOrDefault();
+
+            return result;
+        }
+
         public void EditReview(Review review)
         {
             _context.Entry(review).State = EntityState.Modified;
@@ -49,6 +67,11 @@ namespace MoreVideotapesGalore.Services
         {
             IEnumerable<Review> reviews = _context.Reviews.Where(e => e.userId == userId);
             return reviews;
+        }
+        public Review getTapeReviewFromUser(int userId, int tapeId)
+        {
+            Review review = _context.Reviews.SingleOrDefault(e => e.userId == userId && e.videotapeId == tapeId);
+            return review;
         }
 
         public IEnumerable<Review> getReviewFromUserByTape(int userId, int tapeId)
