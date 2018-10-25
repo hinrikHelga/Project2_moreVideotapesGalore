@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoreVideotapesGalore.Models.Entities;
+using MoreVideotapesGalore.Services;
 using VideoTapeNS;
 
 namespace MoreVideotapesGalore.Controllers
@@ -15,17 +16,19 @@ namespace MoreVideotapesGalore.Controllers
     public class UsersController : ControllerBase
     {
         private readonly VideoTapeContext _context;
+        private UserService us;
 
         public UsersController(VideoTapeContext context)
         {
             _context = context;
+            us = new UserService();
         }
 
         // GET: api/Users
         [HttpGet]
         public IEnumerable<User> GetUsers()
         {
-            return _context.Users;
+            return us.GetAllUsers();
         }
 
         // GET: api/Users/5
@@ -37,7 +40,7 @@ namespace MoreVideotapesGalore.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = await _context.Users.FindAsync(id);
+            var user = us.getUserAndBorrow(id);
 
             if (user == null)
             {
@@ -47,8 +50,27 @@ namespace MoreVideotapesGalore.Controllers
             return Ok(user);
         }
 
-        // PUT: api/Users/5
-        [HttpPut("{id}")]
+        [HttpGet("{id}/tapes")]
+        public async Task<IActionResult> GetUserTapes([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = us.getUser(id);
+            var borrows = us.getTapes(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(new { user, borrows } );
+        }
+
+// PUT: api/Users/5
+[HttpPut("{id}")]
         public async Task<IActionResult> PutUser([FromRoute] int id, [FromBody] User user)
         {
             if (!ModelState.IsValid)
@@ -61,11 +83,10 @@ namespace MoreVideotapesGalore.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                us.EditUser(user);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -91,8 +112,7 @@ namespace MoreVideotapesGalore.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            us.addUser(user);
 
             return CreatedAtAction("GetUser", new { id = user.userId }, user);
         }

@@ -6,26 +6,29 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MoreVideotapesGalore.Models.Entities;
+using MoreVideotapesGalore.Services;
 using VideoTapeNS;
 
 namespace MoreVideotapesGalore.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/users")]
     [ApiController]
     public class BorrowsController : ControllerBase
     {
         private readonly VideoTapeContext _context;
+        private BorrowService bs;
 
         public BorrowsController(VideoTapeContext context)
         {
             _context = context;
+            bs = new BorrowService();
         }
 
         // GET: api/Borrows
         [HttpGet]
         public IEnumerable<Borrow> GetBorrows()
         {
-            return _context.Borrows;
+            return bs.GetAllborrows();
         }
 
         // GET: api/Borrows/5
@@ -37,7 +40,7 @@ namespace MoreVideotapesGalore.Controllers
                 return BadRequest(ModelState);
             }
 
-            var borrow = await _context.Borrows.FindAsync(id);
+            var borrow = bs.getBorrow(id);
 
             if (borrow == null)
             {
@@ -48,28 +51,26 @@ namespace MoreVideotapesGalore.Controllers
         }
 
         // PUT: api/Borrows/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutBorrow([FromRoute] int id, [FromBody] Borrow borrow)
+        [HttpPut("{userid}/tapes/{tapeId}")]
+        public async Task<IActionResult> PutBorrow([FromRoute] int userId, [FromRoute] int tapeId, [FromBody] Borrow borrow)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != borrow.borrowId)
+            if (tapeId != borrow.borrowId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(borrow).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                bs.EditBorrow(borrow); 
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BorrowExists(id))
+                if (!BorrowExists(tapeId))
                 {
                     return NotFound();
                 }
@@ -79,48 +80,54 @@ namespace MoreVideotapesGalore.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(borrow);
         }
 
         // POST: api/Borrows
-        [HttpPost]
-        public async Task<IActionResult> PostBorrow([FromBody] Borrow borrow)
+        [HttpPost("{userid}/tapes/{tapeId}")]
+        public async Task<IActionResult> PostBorrow([FromRoute] int userId, [FromRoute] int tapeId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Borrows.Add(borrow);
-            await _context.SaveChangesAsync();
+            if (bs.checkIfRented(tapeId))
+            {
+                return NotFound(); // tape is already rented
+            }
+            else
+            {
+                Borrow borrow = bs.addBorrow(userId, tapeId);
+                return CreatedAtAction("GetBorrow", new { id = borrow.borrowId }, borrow); // tape is available
+            }
 
-            return CreatedAtAction("GetBorrow", new { id = borrow.borrowId }, borrow);
         }
 
         // DELETE: api/Borrows/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteBorrow([FromRoute] int id)
+        [HttpDelete("{userid}/tapes/{tapeId}")]
+        public async Task<IActionResult> DeleteBorrow([FromRoute] int userId, [FromRoute] int tapeId)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var borrow = await _context.Borrows.FindAsync(id);
+            var borrow = bs.getBorrow(tapeId); // get correct tape
+
             if (borrow == null)
             {
                 return NotFound();
             }
 
-            _context.Borrows.Remove(borrow);
-            await _context.SaveChangesAsync();
+            bs.deleteBorrow(tapeId); // return the tape.
 
             return Ok(borrow);
         }
 
         private bool BorrowExists(int id)
         {
-            return _context.Borrows.Any(e => e.borrowId == id);
+            return bs.checkIfExists(id);
         }
     }
 }

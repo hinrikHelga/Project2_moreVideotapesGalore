@@ -40,7 +40,16 @@ namespace MoreVideotapesGalore.Services
         }
 
         public void addVideotape( Videotape tape)
-        { 
+        {
+            if (!_context.Videotapes.Any())
+            {
+                tape.videotapeId = 1;
+            }
+            else
+            {
+                var latestId = _context.Videotapes.Max(p => p.videotapeId);
+                tape.videotapeId = latestId + 1;
+            }
             _context.Videotapes.Add(tape);
             _context.SaveChangesAsync();
         }
@@ -54,7 +63,9 @@ namespace MoreVideotapesGalore.Services
         public void deleteVideotape(Videotape tape)
         {
             IEnumerable<Borrow> borrows = _context.Borrows.Where(e => e.videotapeId == tape.videotapeId);
+            IEnumerable<Review> reviews = _context.Reviews.Where(e => e.videotapeId == tape.videotapeId);
             _context.Borrows.RemoveRange(borrows);
+            _context.Reviews.RemoveRange(reviews);
             _context.Videotapes.Remove(tape);
             _context.SaveChangesAsync();
         }
