@@ -6,14 +6,24 @@ using System.Threading.Tasks;
 
 namespace MoreVideotapesGalore.Services.DateLogic
 {
+    /*
+     * The class DateValidations (DateValidations.cs)
+     * compares the dates between the query strings from the URIs
+     * and the borrow and return dates of tapes that have already been borrowed.
+     * 
+     * The class is used in user and videotape service when making the reports available for admins.
+     */
     public class DateValidations
     {
+        // Converts string to the DateTime type which will then be used for comparison.
         public DateTime convertToDateTime(string sDate)
         {
             DateTime dtDate = DateTime.ParseExact(sDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
             return dtDate;
         }
 
+
+        // Checks if the date from query in URI is between borrow and return date of a tape or before borrow date if return date is null.
         public bool validateDate(string sBorrowDate, string sReturnDate, string sDateQuery)
         {
             DateTime dateQuery = convertToDateTime(sDateQuery);
@@ -33,6 +43,9 @@ namespace MoreVideotapesGalore.Services.DateLogic
             return checkBeforeDate || checkEqualsDate;
         }
 
+
+        // Checks if the date from query in URI is between borrow and return date 
+        // of a tape or before borrow date if return date is null after duration from query. 
         public bool validateAfterDuration(string sBorrowDate, string sReturnDate, int duration)
         {
             DateTime borrowDate = convertToDateTime(sBorrowDate);
