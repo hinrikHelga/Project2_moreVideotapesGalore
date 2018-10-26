@@ -15,12 +15,10 @@ namespace MoreVideotapesGalore.Controllers
     [ApiController]
     public class BorrowsController : ControllerBase
     {
-        private readonly VideoTapeContext _context;
         private BorrowService bs;
 
         public BorrowsController(VideoTapeContext context)
         {
-            _context = context;
             bs = new BorrowService();
         }
 
