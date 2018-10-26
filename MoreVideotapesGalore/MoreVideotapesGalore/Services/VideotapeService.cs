@@ -22,8 +22,6 @@ namespace MoreVideotapesGalore.Services
         {
             Videotape videotape = _context.Videotapes.SingleOrDefault(e => e.videotapeId == id);
             IEnumerable<Borrow> borrows = _context.Borrows.Where(e => e.videotapeId == id);
-            Console.WriteLine("brorbro");
-            Console.Write(videotape);
 
             return new { videotape, borrows };
         }
