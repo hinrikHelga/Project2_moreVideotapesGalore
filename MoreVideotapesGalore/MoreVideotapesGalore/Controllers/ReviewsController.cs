@@ -15,12 +15,10 @@ namespace MoreVideotapesGalore.Controllers
     [ApiController]
     public class ReviewsController : ControllerBase
     {
-        private readonly VideoTapeContext _context;
         private ReviewService rs;
 
         public ReviewsController(VideoTapeContext context)
         {
-            _context = context;
             rs = new ReviewService();
         }
 
@@ -178,9 +176,14 @@ namespace MoreVideotapesGalore.Controllers
         [HttpPost("users/{user_id}/reviews/{tape_id}")]
         public async Task<IActionResult> PostReview([FromBody] Review review, [FromRoute] int user_id,[FromRoute] int tape_id)
         {
+            bool test = rs.checkUserReview(user_id, tape_id);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+            else if (rs.checkUserReview(review.userId, review.videotapeId))
+            {
+                return NotFound();
             }
 
             Review new_review = rs.addReview(review);
@@ -211,7 +214,7 @@ public async Task<IActionResult> DeleteReview([FromRoute] int user_id, [FromRout
 
         private bool ReviewExists(int id)
         {
-            return _context.Reviews.Any(e => e.reviewId == id);
+            return rs.checkIfExists(id);
         }
     }
 }

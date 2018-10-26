@@ -92,6 +92,12 @@ namespace MoreVideotapesGalore.Services
             _context.SaveChangesAsync();
             return review;
         }
+        //Check used when borrowing a tape to check if the user has already reviewed the specific tape.
+        public bool checkUserReview(int userId, int tapeId)
+        {
+            return _context.Reviews.Any(e => e.userId == userId & e.videotapeId == tapeId);
+
+        }
 
         public bool checkIfExists(int id)
         {

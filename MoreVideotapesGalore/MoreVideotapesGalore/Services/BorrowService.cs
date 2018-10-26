@@ -99,6 +99,8 @@ namespace MoreVideotapesGalore.Services
             _context.SaveChangesAsync();
         }
 
+
+
         public bool checkIfExists(int id)
         {
             return _context.Borrows.Any(e => e.borrowId == id);
