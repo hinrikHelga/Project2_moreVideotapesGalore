@@ -209,7 +209,7 @@ public async Task<IActionResult> DeleteReview([FromRoute] int user_id, [FromRout
 
         private bool ReviewExists(int id)
         {
-            return rs.chechIfExists(id);
+            return rs.checkIfExists(id);
         }
     }
 }
