@@ -34,8 +34,9 @@ namespace MoreVideotapesGalore.Services
             return _context.Videotapes;
         }
 
-        public void EditVideotape( Videotape tape)
+        public void EditVideotape( Videotape tape, int id)
         {
+            tape.videotapeId = id;
             _context.Entry(tape).State = EntityState.Modified;
             _context.SaveChangesAsync();
         }

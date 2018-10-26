@@ -50,14 +50,16 @@ namespace MoreVideotapesGalore.Services
             return _context.Users;
         }
 
-        public void EditUser(User user)
+        public void EditUser(User user, int id)
         {
+            user.userId = id;
             _context.Entry(user).State = EntityState.Modified;
             _context.SaveChangesAsync();
         }
 
         public void addUser(User user)
         {
+            
             if (!_context.Users.Any())
             {
                 user.userId = 1;

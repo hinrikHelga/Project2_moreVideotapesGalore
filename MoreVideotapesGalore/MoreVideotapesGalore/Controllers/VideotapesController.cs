@@ -8,7 +8,7 @@ using MoreVideotapesGalore.Services;
 
 namespace MoreVideotapesGalore.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/tapes")]
     [ApiController]
     public class VideotapesController : ControllerBase
     {
@@ -76,7 +76,7 @@ namespace MoreVideotapesGalore.Controllers
 
             try
             {
-                vts.EditVideotape(videotape);
+                vts.EditVideotape(videotape, id);
             }
             catch (DbUpdateConcurrencyException)
             {

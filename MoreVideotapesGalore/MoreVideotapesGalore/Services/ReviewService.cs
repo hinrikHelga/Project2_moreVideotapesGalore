@@ -45,14 +45,18 @@ namespace MoreVideotapesGalore.Services
             return result;
         }
 
-        public void EditReview(Review review)
+        public void EditReview(Review review, int userId, int tapeId)
         {
+            review.videotapeId = tapeId;
+            review.userId = userId;
             _context.Entry(review).State = EntityState.Modified;
             _context.SaveChangesAsync();
         }
         
-        public Review addReview(Review review)
+        public Review addReview(Review review, int userId, int tapeId)
         {
+            review.userId = userId;
+            review.videotapeId = tapeId;
             if (!_context.Reviews.Any())
             {
                 review.reviewId = 1;

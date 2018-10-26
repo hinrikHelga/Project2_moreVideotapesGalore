@@ -69,6 +69,7 @@ namespace MoreVideotapesGalore.Controllers
 
 
         // GET: api/Reviews/5
+        [HttpGet("tapes/{tapeId}/reviews/{userId}")]
         [HttpGet("users/{userId}/reviews/{tapeId}")]
         public async Task<IActionResult> GetReviewFromUserByTape([FromRoute] int userId, [FromRoute] int tapeId)
         {
@@ -155,7 +156,7 @@ namespace MoreVideotapesGalore.Controllers
 
             try
             {
-                rs.EditReview(review);
+                rs.EditReview(review, user_id, tape_id);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -176,17 +177,16 @@ namespace MoreVideotapesGalore.Controllers
         [HttpPost("users/{user_id}/reviews/{tape_id}")]
         public async Task<IActionResult> PostReview([FromBody] Review review, [FromRoute] int user_id,[FromRoute] int tape_id)
         {
-            bool test = rs.checkUserReview(user_id, tape_id);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            else if (rs.checkUserReview(review.userId, review.videotapeId))
+            else if (rs.checkUserReview(user_id, tape_id))
             {
                 return NotFound();
             }
 
-            Review new_review = rs.addReview(review);
+            Review new_review = rs.addReview(review, user_id, tape_id);
 
             return CreatedAtAction("GetReview", new { id = new_review.reviewId }, new_review);
         }

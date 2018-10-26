@@ -22,12 +22,6 @@ namespace MoreVideotapesGalore.Controllers
             bs = new BorrowService();
         }
 
-        //// GET: api/Borrows
-        //[HttpGet]
-        //public IEnumerable<Borrow> GetBorrows()
-        //{
-        //    return bs.GetAllborrows();
-        //}
 
         // GET: api/users/5
         // returns a single borrow entry by id
@@ -65,7 +59,7 @@ namespace MoreVideotapesGalore.Controllers
 
             try
             {
-                bs.EditBorrow(borrow); 
+                bs.EditBorrow(borrow, userId, tapeId); 
             }
             catch (DbUpdateConcurrencyException)
             {

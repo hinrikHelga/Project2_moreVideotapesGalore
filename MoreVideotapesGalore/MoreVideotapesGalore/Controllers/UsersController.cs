@@ -97,7 +97,7 @@ namespace MoreVideotapesGalore.Controllers
 
             try
             {
-                us.EditUser(user);
+                us.EditUser(user, id);
             }
             catch (DbUpdateConcurrencyException)
             {

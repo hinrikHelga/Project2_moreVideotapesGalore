@@ -22,8 +22,10 @@ namespace MoreVideotapesGalore.Services
             return _context.Borrows;
         }
 
-        public void EditBorrow(Borrow loan)
+        public void EditBorrow(Borrow loan, int userId, int tapeId)
         {
+            loan.userId = userId;
+            loan.videotapeId = tapeId;
             _context.Entry(loan).State = EntityState.Modified;
             _context.SaveChangesAsync();
         }
