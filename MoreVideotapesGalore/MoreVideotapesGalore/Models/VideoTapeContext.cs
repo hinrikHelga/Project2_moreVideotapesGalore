@@ -22,7 +22,7 @@ namespace VideoTapeNS
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite(@"Filename = ..\\MoreVideotapesGalore\\GaloreDB.db");
+            optionsBuilder.UseSqlite(@"Filename = ..\\MoreVideotapesGalore\\GaloreDB.db");// creates server at this directory
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

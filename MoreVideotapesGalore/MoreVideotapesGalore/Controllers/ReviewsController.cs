@@ -96,7 +96,7 @@ namespace MoreVideotapesGalore.Controllers
                 return BadRequest(ModelState);
             }
 
-            var review = rs.getRecommendation();
+            var review = rs.getRecommendation(userId);
 
             if (review == null)
             {

@@ -29,7 +29,8 @@ namespace MoreVideotapesGalore.Controllers
         //    return bs.GetAllborrows();
         //}
 
-        // GET: api/Borrows/5
+        // GET: api/users/5
+        // returns a single borrow entry by id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBorrow([FromRoute] int id)
         {
@@ -48,7 +49,7 @@ namespace MoreVideotapesGalore.Controllers
             return Ok(borrow);
         }
 
-        // PUT: api/Borrows/5
+        // PUT: api/users/{userid}/tapes/{tapeId}
         [HttpPut("{userid}/tapes/{tapeId}")]
         public async Task<IActionResult> PutBorrow([FromRoute] int userId, [FromRoute] int tapeId, [FromBody] Borrow borrow)
         {

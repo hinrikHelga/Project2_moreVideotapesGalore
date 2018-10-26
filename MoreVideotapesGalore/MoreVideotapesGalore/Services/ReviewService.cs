@@ -29,13 +29,18 @@ namespace MoreVideotapesGalore.Services
             return reviews;
         }
 
-        public Videotape getRecommendation()
+        public Videotape getRecommendation(int userId)
         {
             int total = _context.Videotapes.Count();
             Random r = new Random();
             int offset = r.Next(0, total);
 
             Videotape result = _context.Videotapes.Skip(offset).FirstOrDefault();
+
+            if(_context.Borrows.Any(e=>e.userId == userId & e.videotapeId== result.videotapeId))
+            {
+                getRecommendation(userId);
+            }
 
             return result;
         }
