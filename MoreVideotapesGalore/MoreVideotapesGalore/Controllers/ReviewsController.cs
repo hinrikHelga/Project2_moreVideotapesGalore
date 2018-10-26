@@ -15,12 +15,10 @@ namespace MoreVideotapesGalore.Controllers
     [ApiController]
     public class ReviewsController : ControllerBase
     {
-        private readonly VideoTapeContext _context;
         private ReviewService rs;
 
         public ReviewsController(VideoTapeContext context)
         {
-            _context = context;
             rs = new ReviewService();
         }
 
@@ -211,7 +209,7 @@ public async Task<IActionResult> DeleteReview([FromRoute] int user_id, [FromRout
 
         private bool ReviewExists(int id)
         {
-            return _context.Reviews.Any(e => e.reviewId == id);
+            return rs.chechIfExists(id);
         }
     }
 }
