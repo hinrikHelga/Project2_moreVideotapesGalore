@@ -43,38 +43,6 @@ namespace MoreVideotapesGalore.Controllers
             return Ok(borrow);
         }
 
-        // PUT: api/users/{userid}/tapes/{tapeId}
-        [HttpPut("{userid}/tapes/{tapeId}")]
-        public async Task<IActionResult> PutBorrow([FromRoute] int userId, [FromRoute] int tapeId, [FromBody] Borrow borrow)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (tapeId != borrow.borrowId)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                bs.EditBorrow(borrow, userId, tapeId); 
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BorrowExists(tapeId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return Ok(borrow);
-        }
 
         // POST: api/Borrows
         [HttpPost("{userid}/tapes/{tapeId}")]
@@ -92,6 +60,10 @@ namespace MoreVideotapesGalore.Controllers
             else
             {
                 Borrow borrow = bs.addBorrow(userId, tapeId);
+                if(borrow == null)
+                {
+                    return BadRequest();
+                }
                 return CreatedAtAction("GetBorrow", new { id = borrow.borrowId }, borrow); // tape is available
             }
 

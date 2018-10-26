@@ -8,62 +8,68 @@ using VideoTapeNS;
 
 namespace MoreVideotapesGalore.Services
 {
+    /*
+     * The class BorrowService (BorrowService.cs)
+     * contains CRUD functionality while working with database. 
+     */
     public class BorrowService
     {
+        /**
+         * Variable allowing access to database.
+         */
         private readonly VideoTapeContext _context;
 
+
+        /**
+         * Constructor.
+         */ 
         public BorrowService()
         {
             _context = new VideoTapeContext();
         }
 
-        public IEnumerable<Borrow> GetAllborrows()
-        {
-            return _context.Borrows;
-        }
 
-        public void EditBorrow(Borrow loan, int userId, int tapeId)
-        {
-            loan.userId = userId;
-            loan.videotapeId = tapeId;
-            _context.Entry(loan).State = EntityState.Modified;
-            _context.SaveChangesAsync();
-        }
-
+        /**
+         * Register borrowed videotape which has the borrow date set to the current date.
+         * The function only adds videotape to database if videotape exists in database.
+         */ 
         public Borrow addBorrow(int userId, int tapeId) 
         {
             string today = DateTime.Now.ToString("yyyy-MM-dd");
             Borrow br = new Borrow();
-            if (!_context.Borrows.Any())
-            {
-                br.borrowId = 1;
-            }
-            else
-            {
-                var latestId = _context.Borrows.Max(p => p.borrowId);
-                br.borrowId = latestId + 1;
-            }
+
+            var latestId = _context.Borrows.Max(p => p.borrowId);
+            br.borrowId = latestId + 1;
+
             br.userId = userId;
             br.videotapeId = tapeId;
             br.borrow_date = today;
             br.return_date = null;
 
             Videotape tape = _context.Videotapes.SingleOrDefault(e => e.videotapeId == tapeId);
-            if(tape != null)
+
+            // If videotape ID from URI is valid
+            if (tape != null)
             {
+                // Only add to user's borrow history if videotape exists in database.
                 if (checkIfTapeExists(tape.videotapeId))
                 {
                     tape.isRented = true;
                     _context.Entry(tape).State = EntityState.Modified;
                     _context.SaveChangesAsync();
                 }
+
+                _context.Borrows.Add(br);
+                _context.SaveChangesAsync();
             }
  
-            _context.Borrows.Add(br);
-            _context.SaveChangesAsync();
             return br;
         }
 
+
+        /**
+         * Return true if videotape is already borrowed by some user.
+         */ 
         public bool checkIfRented(int id)
         {
             Videotape tape = _context.Videotapes.SingleOrDefault(e => e.videotapeId == id);
@@ -77,18 +83,29 @@ namespace MoreVideotapesGalore.Services
             }
         }
 
+
+        /**
+         * Return borrow history of videotape.
+         */ 
         public Borrow getBorrow(int id)
         {
             var borrow = _context.Borrows.SingleOrDefault(e => e.videotapeId == id);
             return borrow;
         }
 
+
+        /**
+         * Remove a videotape from borrow history in database.
+         */ 
         public void deleteBorrow(int id)
         {
             Borrow br = getBorrow(id);
-            Videotape tape = _context.Videotapes.SingleOrDefault(e => e.videotapeId == id);// the tape to change isRented
+            Videotape tape = _context.Videotapes.SingleOrDefault(e => e.videotapeId == id); // the tape to change isRented
+
+            // If videotape ID from URI is valid
             if (tape != null)
             {
+                // If videotape exists in database, return it.
                 if (checkIfTapeExists(tape.videotapeId))
                 {
                     tape.isRented = false;
@@ -102,11 +119,18 @@ namespace MoreVideotapesGalore.Services
         }
 
 
-
+        /**
+         * Returns true if a borrowed videotape exists in database.
+         */
         public bool checkIfExists(int id)
         {
             return _context.Borrows.Any(e => e.borrowId == id);
         }
+
+
+        /**
+         * Returns true if videotape exists in database.
+         */
         public bool checkIfTapeExists(int id)
         {
             return _context.Videotapes.Any(e => e.videotapeId == id);
