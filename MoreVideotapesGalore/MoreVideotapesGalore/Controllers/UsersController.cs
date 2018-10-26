@@ -15,12 +15,10 @@ namespace MoreVideotapesGalore.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly VideoTapeContext _context;
         private UserService us;
 
         public UsersController(VideoTapeContext context)
         {
-            _context = context;
             us = new UserService();
         }
 
@@ -149,7 +147,7 @@ namespace MoreVideotapesGalore.Controllers
         // Move to services?
         private bool UserExists(int id)
         {
-            return _context.Users.Any(e => e.userId == id);
+            return us.checkIfExists(id);
         }
     }
 }
