@@ -87,7 +87,7 @@ namespace MoreVideotapesGalore.Services
             _context.SaveChangesAsync();
         }
 
-        public IEnumerable<User> usersWithTapesBorrowedAtDate(string sDate)
+        public IEnumerable<User> usersWithTapesBorrowedOnDate(string sDate)
         {
             IEnumerable<Borrow> borrowedTapes = _context.Borrows;
             List<User> usersWithBorrowedTapes = new List<User>();
@@ -121,6 +121,27 @@ namespace MoreVideotapesGalore.Services
             }
 
             return usersWithBorrowedTapes;
+        }
+
+        public IEnumerable<User> usersWithTapesBorrowedOnDateAfterDuration(string sDate, string sDuration)
+        {
+            IEnumerable<Borrow> borrowedTapes = _context.Borrows;
+            List<User> usersWithBorrowedTapesAfterDuration = new List<User>();
+            int duration = Int32.Parse(sDuration);
+
+            foreach (var tape in borrowedTapes)
+            {
+                if (validation.validateDate(tape.borrow_date, tape.return_date, sDate))
+                {
+                    if (validation.validateAfterDuration(tape.borrow_date, tape.return_date, duration))
+                    {
+                        var userWithTape = getUser(tape.userId);
+                        usersWithBorrowedTapesAfterDuration.Add(userWithTape);
+                    }
+                }
+            }
+
+            return usersWithBorrowedTapesAfterDuration;
         }
 
         public bool checkIfExists(int id)
