@@ -7,15 +7,18 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using VideoTapeNS;
+using MoreVideotapesGalore.Services.DateLogic;
 
 namespace MoreVideotapesGalore.Services
 {
     public class UserService
     {
         private readonly VideoTapeContext _context;
+        private DateValidations validation;
 
         public UserService()
         {
+            validation = new DateValidations();
             _context = new VideoTapeContext();
         }
 
@@ -84,21 +87,17 @@ namespace MoreVideotapesGalore.Services
             _context.SaveChangesAsync();
         }
 
-        public IEnumerable<object> usersWithTapesBorrowedAtDate(string sDate)
+        public IEnumerable<User> usersWithTapesBorrowedAtDate(string sDate)
         {
             IEnumerable<Borrow> borrowedTapes = _context.Borrows;
-            List<object> usersWithBorrowedTapes = new List<object>();
-
-            // Remove this line?
-            DateTime dtDate = convertToDateTime(sDate);
+            List<User> usersWithBorrowedTapes = new List<User>();
 
             foreach (var tape in borrowedTapes)
             {
-                if (validateDate(tape.borrow_date, tape.return_date, sDate))
+                if (validation.validateDate(tape.borrow_date, tape.return_date, sDate))
                 {
                     var userWithTape = getUser(tape.userId);
-                    var tapeOnLoan = _context.Videotapes.SingleOrDefault(e => e.videotapeId == tape.videotapeId);
-                    usersWithBorrowedTapes.Add(new { userWithTape, tapeOnLoan });
+                    usersWithBorrowedTapes.Add(userWithTape);
                 }
             }
 
@@ -114,7 +113,7 @@ namespace MoreVideotapesGalore.Services
 
             foreach (var tape in borrowedTapes)
             {
-                if (validateAfterDuration(tape.borrow_date, tape.return_date, duration))
+                if (validation.validateAfterDuration(tape.borrow_date, tape.return_date, duration))
                 {
                     var userWithTape = getUser(tape.userId);
                     usersWithBorrowedTapes.Add(userWithTape);
@@ -123,58 +122,6 @@ namespace MoreVideotapesGalore.Services
 
             return usersWithBorrowedTapes;
         }
-
-
-        public DateTime convertToDateTime(string sDate)
-        {
-            DateTime dtDate = DateTime.ParseExact(sDate, "yyyy-MM-dd", CultureInfo.InvariantCulture);
-            return dtDate;
-        }
-
-        public bool validateDate(string sBorrowDate, string sReturnDate, string sDateQuery)
-        {
-            DateTime dateQuery = convertToDateTime(sDateQuery);
-            DateTime borrowDate = convertToDateTime(sBorrowDate);
-
-            bool checkBeforeDate = borrowDate < dateQuery;
-            bool checkEqualsDate = borrowDate == dateQuery;
-            
-            if (sReturnDate != null)
-            {
-                DateTime returnDate = convertToDateTime(sReturnDate);
-                bool checkAfterDate = returnDate > dateQuery;
-
-                return (checkBeforeDate || checkEqualsDate) && checkAfterDate;
-            }
-
-            return checkBeforeDate || checkEqualsDate;
-        }
-
-        public bool validateAfterDuration(string sBorrowDate, string sReturnDate, int duration)
-        {
-            DateTime borrowDate = convertToDateTime(sBorrowDate);
-            DateTime dateWithDuration = borrowDate.AddDays(duration);
-
-            if (sReturnDate != null)
-            {
-                DateTime returnDate = convertToDateTime(sReturnDate);
-
-                bool checkTapeAfterDuration = validateDate(sBorrowDate, sReturnDate, dateWithDuration.ToString("yyyy-MM-dd"))
-                                              && dateWithDuration < returnDate;
-
-                return checkTapeAfterDuration;
-            }
-
-            else
-            {
-                string today = DateTime.Now.ToString("yyyy-MM-dd");
-                bool checkTapeAfterDuration = validateDate(sBorrowDate, sReturnDate, dateWithDuration.ToString("yyyy-MM-dd"))
-                                              && dateWithDuration < DateTime.Now;
-
-                return checkTapeAfterDuration;
-            }
-        }
-
 
         public bool checkIfExists(int id)
         {
