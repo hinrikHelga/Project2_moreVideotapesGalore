@@ -14,7 +14,7 @@ namespace MoreVideotapesGalore.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     userId = table.Column<int>(nullable: false),
                     videotapeId = table.Column<int>(nullable: false),
-                    borrow_date = table.Column<string>(nullable: true),
+                    borrow_date = table.Column<string>(nullable: false),
                     return_date = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -31,7 +31,7 @@ namespace MoreVideotapesGalore.Migrations
                     userId = table.Column<int>(nullable: false),
                     videotapeId = table.Column<int>(nullable: false),
                     rating = table.Column<int>(nullable: false),
-                    text = table.Column<string>(nullable: true)
+                    text = table.Column<string>(maxLength: 250, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -44,11 +44,11 @@ namespace MoreVideotapesGalore.Migrations
                 {
                     userId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    first_name = table.Column<string>(nullable: true),
-                    last_name = table.Column<string>(nullable: true),
-                    email = table.Column<string>(nullable: true),
-                    phone_number = table.Column<string>(nullable: true),
-                    address = table.Column<string>(nullable: true)
+                    first_name = table.Column<string>(maxLength: 50, nullable: true),
+                    last_name = table.Column<string>(maxLength: 50, nullable: true),
+                    email = table.Column<string>(maxLength: 50, nullable: true),
+                    phone_number = table.Column<string>(maxLength: 50, nullable: true),
+                    address = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,12 +61,12 @@ namespace MoreVideotapesGalore.Migrations
                 {
                     videotapeId = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    title = table.Column<string>(nullable: true),
-                    director_first_name = table.Column<string>(nullable: true),
-                    director_last_name = table.Column<string>(nullable: true),
-                    type = table.Column<string>(nullable: true),
-                    release_date = table.Column<string>(nullable: true),
-                    eidr = table.Column<string>(nullable: true),
+                    title = table.Column<string>(maxLength: 50, nullable: true),
+                    director_first_name = table.Column<string>(maxLength: 50, nullable: true),
+                    director_last_name = table.Column<string>(maxLength: 50, nullable: true),
+                    type = table.Column<string>(maxLength: 50, nullable: true),
+                    release_date = table.Column<string>(maxLength: 50, nullable: true),
+                    eidr = table.Column<string>(maxLength: 50, nullable: true),
                     isRented = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>

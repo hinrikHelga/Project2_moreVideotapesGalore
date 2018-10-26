@@ -19,13 +19,6 @@ namespace MoreVideotapesGalore.Controllers
             vts = new VideotapeService();
         }
 
-        //// GET: api/Videotapes
-        //[HttpGet]
-        //public IEnumerable<Videotape> GetVideotapes()
-        //{
-        //    return vts.GetAllVideotapes();
-        //}
-
         [HttpGet]
         public async Task<IActionResult> GetVideotapes([FromQuery] string LoanDate)
         { 

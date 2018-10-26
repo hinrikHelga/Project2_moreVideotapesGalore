@@ -8,7 +8,7 @@ using VideoTapeNS;
 namespace MoreVideotapesGalore.Migrations
 {
     [DbContext(typeof(VideoTapeContext))]
-    [Migration("20181025135204_CreateDatabase")]
+    [Migration("20181026184136_CreateDatabase")]
     partial class CreateDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,7 +22,8 @@ namespace MoreVideotapesGalore.Migrations
                     b.Property<int>("borrowId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("borrow_date");
+                    b.Property<string>("borrow_date")
+                        .IsRequired();
 
                     b.Property<string>("return_date");
 
@@ -255,7 +256,8 @@ namespace MoreVideotapesGalore.Migrations
 
                     b.Property<int>("rating");
 
-                    b.Property<string>("text");
+                    b.Property<string>("text")
+                        .HasMaxLength(250);
 
                     b.Property<int>("userId");
 
@@ -271,15 +273,20 @@ namespace MoreVideotapesGalore.Migrations
                     b.Property<int>("userId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("address");
+                    b.Property<string>("address")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("email");
+                    b.Property<string>("email")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("first_name");
+                    b.Property<string>("first_name")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("last_name");
+                    b.Property<string>("last_name")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("phone_number");
+                    b.Property<string>("phone_number")
+                        .HasMaxLength(50);
 
                     b.HasKey("userId");
 
@@ -1193,19 +1200,25 @@ namespace MoreVideotapesGalore.Migrations
                     b.Property<int>("videotapeId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("director_first_name");
+                    b.Property<string>("director_first_name")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("director_last_name");
+                    b.Property<string>("director_last_name")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("eidr");
+                    b.Property<string>("eidr")
+                        .HasMaxLength(50);
 
                     b.Property<bool>("isRented");
 
-                    b.Property<string>("release_date");
+                    b.Property<string>("release_date")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("title");
+                    b.Property<string>("title")
+                        .HasMaxLength(50);
 
-                    b.Property<string>("type");
+                    b.Property<string>("type")
+                        .HasMaxLength(50);
 
                     b.HasKey("videotapeId");
 
