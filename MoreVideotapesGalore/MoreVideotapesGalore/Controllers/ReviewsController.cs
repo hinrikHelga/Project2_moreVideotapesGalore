@@ -176,9 +176,14 @@ namespace MoreVideotapesGalore.Controllers
         [HttpPost("users/{user_id}/reviews/{tape_id}")]
         public async Task<IActionResult> PostReview([FromBody] Review review, [FromRoute] int user_id,[FromRoute] int tape_id)
         {
+            bool test = rs.checkUserReview(user_id, tape_id);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+            else if (rs.checkUserReview(review.userId, review.videotapeId))
+            {
+                return NotFound();
             }
 
             Review new_review = rs.addReview(review);
