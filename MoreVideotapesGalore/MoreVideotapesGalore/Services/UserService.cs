@@ -84,16 +84,37 @@ namespace MoreVideotapesGalore.Services
             _context.SaveChangesAsync();
         }
 
-        public IEnumerable<User> usersWithTapesBorrowedAtDate(string sDate)
+        public IEnumerable<object> usersWithTapesBorrowedAtDate(string sDate)
         {
             IEnumerable<Borrow> borrowedTapes = _context.Borrows;
-            List<User> usersWithBorrowedTapes = new List<User>();
+            List<object> usersWithBorrowedTapes = new List<object>();
 
+            // Remove this line?
             DateTime dtDate = convertToDateTime(sDate);
 
             foreach (var tape in borrowedTapes)
             {
                 if (validateDate(tape.borrow_date, tape.return_date, sDate))
+                {
+                    var userWithTape = getUser(tape.userId);
+                    var tapeOnLoan = _context.Videotapes.SingleOrDefault(e => e.videotapeId == tape.videotapeId);
+                    usersWithBorrowedTapes.Add(new { userWithTape, tapeOnLoan });
+                }
+            }
+
+            return usersWithBorrowedTapes;
+        }
+
+        public IEnumerable<User> usersWithTapesBorrowedAfterDuration(string sDuration)
+        {
+            IEnumerable<Borrow> borrowedTapes = _context.Borrows;
+            List<User> usersWithBorrowedTapes = new List<User>();
+
+            int duration = Int32.Parse(sDuration);
+
+            foreach (var tape in borrowedTapes)
+            {
+                if (validateAfterDuration(tape.borrow_date, tape.return_date, duration))
                 {
                     var userWithTape = getUser(tape.userId);
                     usersWithBorrowedTapes.Add(userWithTape);
@@ -127,6 +148,31 @@ namespace MoreVideotapesGalore.Services
             }
 
             return checkBeforeDate || checkEqualsDate;
+        }
+
+        public bool validateAfterDuration(string sBorrowDate, string sReturnDate, int duration)
+        {
+            DateTime borrowDate = convertToDateTime(sBorrowDate);
+            DateTime dateWithDuration = borrowDate.AddDays(duration);
+
+            if (sReturnDate != null)
+            {
+                DateTime returnDate = convertToDateTime(sReturnDate);
+
+                bool checkTapeAfterDuration = validateDate(sBorrowDate, sReturnDate, dateWithDuration.ToString("yyyy-MM-dd"))
+                                              && dateWithDuration < returnDate;
+
+                return checkTapeAfterDuration;
+            }
+
+            else
+            {
+                string today = DateTime.Now.ToString("yyyy-MM-dd");
+                bool checkTapeAfterDuration = validateDate(sBorrowDate, sReturnDate, dateWithDuration.ToString("yyyy-MM-dd"))
+                                              && dateWithDuration < DateTime.Now;
+
+                return checkTapeAfterDuration;
+            }
         }
 
 

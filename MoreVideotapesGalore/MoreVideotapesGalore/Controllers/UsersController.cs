@@ -26,16 +26,21 @@ namespace MoreVideotapesGalore.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public IEnumerable<User> GetUsers([FromQuery] string LoanDate)
+        public async Task<IActionResult> GetUsers([FromQuery] string LoanDate, [FromQuery] string LoanDuration)
         {
-            if (string.IsNullOrEmpty(LoanDate))
+            if (string.IsNullOrEmpty(LoanDate) && !string.IsNullOrEmpty(LoanDuration))
             {
-                return us.GetAllUsers();
+                return Ok(us.usersWithTapesBorrowedAfterDuration(LoanDuration));
+            }
+
+            else if (string.IsNullOrEmpty(LoanDate))
+            {
+                return Ok(us.GetAllUsers());
             }
             
             else
             {
-                return us.usersWithTapesBorrowedAtDate(LoanDate);
+                return Ok(us.usersWithTapesBorrowedAtDate(LoanDate));
             }
             
         }
