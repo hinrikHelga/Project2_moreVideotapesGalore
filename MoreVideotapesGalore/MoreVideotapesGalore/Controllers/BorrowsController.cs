@@ -24,12 +24,12 @@ namespace MoreVideotapesGalore.Controllers
             bs = new BorrowService();
         }
 
-        // GET: api/Borrows
-        [HttpGet]
-        public IEnumerable<Borrow> GetBorrows()
-        {
-            return bs.GetAllborrows();
-        }
+        //// GET: api/Borrows
+        //[HttpGet]
+        //public IEnumerable<Borrow> GetBorrows()
+        //{
+        //    return bs.GetAllborrows();
+        //}
 
         // GET: api/Borrows/5
         [HttpGet("{id}")]

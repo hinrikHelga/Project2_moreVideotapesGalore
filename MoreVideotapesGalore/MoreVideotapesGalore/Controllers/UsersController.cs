@@ -26,9 +26,18 @@ namespace MoreVideotapesGalore.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public IEnumerable<User> GetUsers()
+        public IEnumerable<User> GetUsers([FromQuery] string LoanDate)
         {
-            return us.GetAllUsers();
+            if (string.IsNullOrEmpty(LoanDate))
+            {
+                return us.GetAllUsers();
+            }
+            
+            else
+            {
+                return us.usersWithTapesBorrowedAtDate(LoanDate);
+            }
+            
         }
 
         // GET: api/Users/5
@@ -68,8 +77,8 @@ namespace MoreVideotapesGalore.Controllers
             return Ok(tapesOnLoan );
         }
 
-// PUT: api/Users/5
-[HttpPut("{id}")]
+        // PUT: api/Users/5
+        [HttpPut("{id}")]
         public async Task<IActionResult> PutUser([FromRoute] int id, [FromBody] User user)
         {
             if (!ModelState.IsValid)
@@ -137,6 +146,7 @@ namespace MoreVideotapesGalore.Controllers
             return Ok(user);
         }
 
+        // Move to services?
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.userId == id);
