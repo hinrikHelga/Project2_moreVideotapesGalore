@@ -5,16 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using VideoTapeNS;
+using MoreVideotapesGalore.Services.DateLogic;
 
 namespace MoreVideotapesGalore.Services
 {
     public class VideotapeService
     {
         private readonly VideoTapeContext _context;
+        private DateValidations validation;
 
         public VideotapeService()
         {
             _context = new VideoTapeContext();
+            validation = new DateValidations();
         }
 
 
@@ -66,6 +69,23 @@ namespace MoreVideotapesGalore.Services
             _context.Reviews.RemoveRange(reviews);
             _context.Videotapes.Remove(tape);
             _context.SaveChangesAsync();
+        }
+
+        public IEnumerable<Videotape> tapesBorrowedAtDate(string sDate)
+        {
+            IEnumerable<Borrow> borrowedTapes = _context.Borrows;
+            List<Videotape> usersWithBorrowedTapes = new List<Videotape>();
+
+            foreach (var tape in borrowedTapes)
+            {
+                if (validation.validateDate(tape.borrow_date, tape.return_date, sDate))
+                {
+                    var tapeOnLoan = getVideotape(tape.videotapeId);
+                    usersWithBorrowedTapes.Add(tapeOnLoan);
+                }
+            }
+
+            return usersWithBorrowedTapes;
         }
 
         public bool checkIfExists(int id)

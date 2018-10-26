@@ -87,18 +87,17 @@ namespace MoreVideotapesGalore.Services
             _context.SaveChangesAsync();
         }
 
-        public IEnumerable<object> usersWithTapesBorrowedAtDate(string sDate)
+        public IEnumerable<User> usersWithTapesBorrowedAtDate(string sDate)
         {
             IEnumerable<Borrow> borrowedTapes = _context.Borrows;
-            List<object> usersWithBorrowedTapes = new List<object>();
+            List<User> usersWithBorrowedTapes = new List<User>();
 
             foreach (var tape in borrowedTapes)
             {
                 if (validation.validateDate(tape.borrow_date, tape.return_date, sDate))
                 {
                     var userWithTape = getUser(tape.userId);
-                    var tapeOnLoan = _context.Videotapes.SingleOrDefault(e => e.videotapeId == tape.videotapeId);
-                    usersWithBorrowedTapes.Add(new { userWithTape, tapeOnLoan });
+                    usersWithBorrowedTapes.Add(userWithTape);
                 }
             }
 
