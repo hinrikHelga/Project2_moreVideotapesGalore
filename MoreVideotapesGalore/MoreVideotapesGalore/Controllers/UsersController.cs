@@ -116,7 +116,7 @@ namespace MoreVideotapesGalore.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/Users

@@ -11,7 +11,7 @@ using VideoTapeNS;
 
 namespace MoreVideotapesGalore.Controllers
 {
-    [Route("api/users")]
+    [Route("api/")]
     [ApiController]
     public class BorrowsController : ControllerBase
     {
@@ -44,8 +44,9 @@ namespace MoreVideotapesGalore.Controllers
         }
 
 
+
         // POST: api/Borrows
-        [HttpPost("{userid}/tapes/{tapeId}")]
+        [HttpPost("users/{userid}/tapes/{tapeId}")]
         public async Task<IActionResult> PostBorrow([FromRoute] int userId, [FromRoute] int tapeId)
         {
             if (!ModelState.IsValid)
@@ -70,7 +71,7 @@ namespace MoreVideotapesGalore.Controllers
         }
 
         // DELETE: api/Borrows/5
-        [HttpDelete("{userid}/tapes/{tapeId}")]
+        [HttpDelete("users/{userid}/tapes/{tapeId}")]
         public async Task<IActionResult> DeleteBorrow([FromRoute] int userId, [FromRoute] int tapeId)
         {
             if (!ModelState.IsValid)

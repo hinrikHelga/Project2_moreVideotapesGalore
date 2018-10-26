@@ -103,6 +103,7 @@ namespace MoreVideotapesGalore.Services
         public void addUser(User user)
         {
             var latestId = _context.Users.Max(p => p.userId);
+            user.userId = latestId + 1;
 
             _context.Users.Add(user);
             _context.SaveChangesAsync();
